@@ -7,5 +7,5 @@ import th.co.mfec.api.entity.jpa.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-
+    User findByUsername(String username);
 }

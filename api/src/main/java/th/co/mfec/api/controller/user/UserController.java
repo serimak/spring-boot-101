@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import th.co.mfec.api.model.common.SuccessResponse;
+import th.co.mfec.api.model.user.UserAuthenRequest;
+import th.co.mfec.api.model.user.UserAuthenResponse;
+import th.co.mfec.api.model.user.UserRegisterRequest;
+import th.co.mfec.api.model.user.UserRegisterResponse;
 import th.co.mfec.api.model.user.UserRequest;
 import th.co.mfec.api.model.user.UserResponse;
 import th.co.mfec.api.service.user.UserService;
@@ -27,15 +31,36 @@ public class UserController {
         return id;
     }
 
-    // http://localhost:8080/api/v1/user/register
-    @PostMapping("/register")
-    public ResponseEntity<SuccessResponse<UserResponse>> register(@RequestBody UserRequest userRequest){
+    // http://localhost:8080/api/v1/user/create
+    @PostMapping("/create")
+    public ResponseEntity<SuccessResponse<UserResponse>> create(@RequestBody UserRequest userRequest){
         SuccessResponse<UserResponse> successResponse = new SuccessResponse<UserResponse>();
         UserResponse userResponse = userService.createUser(userRequest);
         successResponse.setData(userResponse);
         return ResponseEntity.ok(successResponse);
 
         //return ResponseEntity.ok(new SuccessResponse<UserResponse>(userService.createUser(userRequest)));
+    }
+
+    // http://localhost:8080/api/v1/user/register
+    @PostMapping("/register")
+    public ResponseEntity<SuccessResponse<UserRegisterResponse>> register(@RequestBody UserRegisterRequest userRegisterRequest){
+        SuccessResponse<UserRegisterResponse> successResponse = new SuccessResponse<UserRegisterResponse>();
+        UserRegisterResponse userResponse = userService.registerUser(userRegisterRequest);
+        successResponse.setData(userResponse);
+        return ResponseEntity.ok(successResponse);
+    }
+
+    // http://localhost:8080/api/v1/user/authen
+    @PostMapping("/authen")
+    public ResponseEntity<SuccessResponse<UserAuthenResponse>> register(@RequestBody UserAuthenRequest userAuthenRequest){
+        return ResponseEntity.ok(new SuccessResponse<UserAuthenResponse>(userService.authenUser(userAuthenRequest)));
+    }
+
+    // http://localhost:8080/api/v1/user/refresh-token
+    @GetMapping("/refresh-token")
+    public ResponseEntity<SuccessResponse<UserAuthenResponse>> refreshToken(){
+        return ResponseEntity.ok(new SuccessResponse<UserAuthenResponse>(userService.refreshToken()));
     }
     
 }
