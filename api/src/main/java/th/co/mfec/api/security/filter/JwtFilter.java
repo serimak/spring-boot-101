@@ -19,6 +19,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import th.co.mfec.api.constant.Authority;
 import th.co.mfec.api.constant.StatusCode;
 import th.co.mfec.api.model.common.ErrorResponse;
 import th.co.mfec.api.security.util.JwtUtil;
@@ -33,8 +34,8 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
             //Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZXJpOEBtZmVjLmNvLnRoIiwiaWF0IjoxNjU1MzkyMTE3LCJleHAiOjE2NTUzOTMwMTd9.TmOp7xqtxAI3LGnoliUwPtye1LDvCL8wpF4iD_5a7FE
-            String jwtToken = request.getHeader("Authorization");
-            if((jwtToken != null) && (jwtToken.startsWith("Bearer"))){
+            String jwtToken = request.getHeader(Authority.AUTHORIZATION);
+            if((jwtToken != null) && (jwtToken.startsWith(Authority.BEARER))){
                 jwtToken = jwtToken.substring(7);
                 try{
                     jwtUtil.validateToken(jwtToken);
@@ -50,7 +51,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 String username = jwtUtil.getUsernameFromJwt(jwtToken);
                 if((username != null) && (SecurityContextHolder.getContext().getAuthentication() == null)){
                     List<GrantedAuthority> authorities = new ArrayList<>();
-                    authorities.add(new SimpleGrantedAuthority("USER"));
+                    authorities.add(new SimpleGrantedAuthority(Authority.USER));
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, "(protected)", authorities);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }

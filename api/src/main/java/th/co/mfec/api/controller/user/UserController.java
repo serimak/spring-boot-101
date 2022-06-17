@@ -38,8 +38,6 @@ public class UserController {
         UserResponse userResponse = userService.createUser(userRequest);
         successResponse.setData(userResponse);
         return ResponseEntity.ok(successResponse);
-
-        //return ResponseEntity.ok(new SuccessResponse<UserResponse>(userService.createUser(userRequest)));
     }
 
     // http://localhost:8080/api/v1/user/register

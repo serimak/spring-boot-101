@@ -7,10 +7,19 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import th.co.mfec.api.exception.BaseException;
+import th.co.mfec.api.exception.BusinessException;
 import th.co.mfec.api.model.common.ErrorResponse;
 
 @RestControllerAdvice
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(BusinessException.class)
+	public ResponseEntity<Object> handleBusinessException(BusinessException ex){
+		ex.printStackTrace();
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+			new ErrorResponse<Object>(ex.getCode(), ex.getMessage())
+		);
+	}
 
     @ExceptionHandler(BaseException.class)
     public ResponseEntity<Object> handleBaseException(BaseException ex){
