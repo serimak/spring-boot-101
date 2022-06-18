@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "api.jwt.secrete",
+    "type": "java.lang.String",
+    "description": "A description for 'api.jwt.secrete'"
+  },
+  {
+    "name": "api.jwt.expired",
+    "type": "java.lang.String",
+    "description": "A description for 'api.jwt.expired'"
+  }
+]}
