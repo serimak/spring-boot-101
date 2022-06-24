@@ -1,5 +1,7 @@
 package th.co.mfec.api.controller.user;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import th.co.mfec.api.model.common.SuccessResponse;
+import th.co.mfec.api.model.user.UserAddressRequest;
+import th.co.mfec.api.model.user.UserAddressResponse;
 import th.co.mfec.api.model.user.UserAuthenRequest;
 import th.co.mfec.api.model.user.UserAuthenResponse;
+import th.co.mfec.api.model.user.UserProfileAddressesResponse;
+import th.co.mfec.api.model.user.UserProfileRequest;
+import th.co.mfec.api.model.user.UserProfileResponse;
 import th.co.mfec.api.model.user.UserRegisterRequest;
 import th.co.mfec.api.model.user.UserRegisterResponse;
 import th.co.mfec.api.model.user.UserRequest;
@@ -33,7 +40,7 @@ public class UserController {
 
     // http://localhost:8080/api/v1/user/create
     @PostMapping("/create")
-    public ResponseEntity<SuccessResponse<UserResponse>> create(@RequestBody UserRequest userRequest){
+    public ResponseEntity<SuccessResponse<UserResponse>> create(@Valid @RequestBody UserRequest userRequest){
         SuccessResponse<UserResponse> successResponse = new SuccessResponse<UserResponse>();
         UserResponse userResponse = userService.createUser(userRequest);
         successResponse.setData(userResponse);
@@ -59,6 +66,24 @@ public class UserController {
     @GetMapping("/refresh-token")
     public ResponseEntity<SuccessResponse<UserAuthenResponse>> refreshToken(){
         return ResponseEntity.ok(new SuccessResponse<UserAuthenResponse>(userService.refreshToken()));
+    }
+
+    // http://localhost:8080/api/v1/user/profile
+    @PostMapping("/profile")
+    public ResponseEntity<SuccessResponse<UserProfileResponse>> profile(@Valid @RequestBody UserProfileRequest userProfileRequest){
+        return ResponseEntity.ok(new SuccessResponse<UserProfileResponse>(userService.updateUserProfile(userProfileRequest)));
+    }
+
+    // http://localhost:8080/api/v1/user/address
+    @PostMapping("/address")
+    public ResponseEntity<SuccessResponse<UserAddressResponse>> profile(@Valid @RequestBody UserAddressRequest userAddressRequest){
+        return ResponseEntity.ok(new SuccessResponse<UserAddressResponse>(userService.updateUserAddress(userAddressRequest)));
+    }
+
+    // http://localhost:8080/api/v1/user/profile
+    @GetMapping("/profile")
+    public ResponseEntity<SuccessResponse<UserProfileAddressesResponse>> profile(){
+        return ResponseEntity.ok(new SuccessResponse<UserProfileAddressesResponse>(userService.getUserProfileAddresses()));
     }
     
 }

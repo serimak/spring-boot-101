@@ -1,35 +1,34 @@
 package th.co.mfec.api.entity.jpa;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "USER")
-public class User {
+@Table(name = "ADDRESS")
+public class Address {
     
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "user_name")
-    private String username;
-    @Column(name = "password")
-    private String password;
-    @Column(name = "is_enabled")
-    private String isEnabled;
-    @Column(name = "is_locked")
-    private String isLocked;
-    @Column(name = "expired_date")
-    private Date expiredDate;
+    @Column(name = "line_1")
+    private String line1;
+    @Column(name = "line_2")
+    private String line2;
+    @Column(name = "postcode")
+    private String postcode;
+    @Column(name = "type")
+    private String type;
+    @Column(name = "prefer")
+    private String prefer;
     @Column(name = "delete_flag")
     private String deleteFlag;
     @Column(name = "created_by")
@@ -44,60 +43,45 @@ public class User {
     private Integer deletedBy;
     @Column(name = "deleted_at")
     private Date deletedAt;
-
-    @OneToOne(mappedBy = "user")
-    private UserProfile userProfile;
-
-    @OneToMany(mappedBy = "user")
-    private List<Address> addresses;
-
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-    }
-    public UserProfile getUserProfile() {
-        return userProfile;
-    }
-    public void setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
-    }
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    
     public Integer getId() {
         return id;
     }
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getUsername() {
-        return username;
+    public String getLine1() {
+        return line1;
     }
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLine1(String line1) {
+        this.line1 = line1;
     }
-    public String getPassword() {
-        return password;
+    public String getLine2() {
+        return line2;
     }
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLine2(String line2) {
+        this.line2 = line2;
     }
-    public String getIsEnabled() {
-        return isEnabled;
+    public String getPostcode() {
+        return postcode;
     }
-    public void setIsEnabled(String isEnabled) {
-        this.isEnabled = isEnabled;
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
     }
-    public String getIsLocked() {
-        return isLocked;
+    public String getType() {
+        return type;
     }
-    public void setIsLocked(String isLocked) {
-        this.isLocked = isLocked;
+    public void setType(String type) {
+        this.type = type;
     }
-    public Date getExpiredDate() {
-        return expiredDate;
+    public String getPrefer() {
+        return prefer;
     }
-    public void setExpiredDate(Date expiredDate) {
-        this.expiredDate = expiredDate;
+    public void setPrefer(String prefer) {
+        this.prefer = prefer;
     }
     public String getDeleteFlag() {
         return deleteFlag;
@@ -141,5 +125,11 @@ public class User {
     public void setDeletedAt(Date deletedAt) {
         this.deletedAt = deletedAt;
     }
-
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
 }

@@ -1,8 +1,12 @@
 package th.co.mfec.api.model.user;
 
+import javax.validation.constraints.NotEmpty;
+
 public class UserRequest {
 
+    @NotEmpty(message = "The username is required.")
     private String username;
+    @NotEmpty(message = "The password is required.")
     private String password;
     
     public String getUsername() {

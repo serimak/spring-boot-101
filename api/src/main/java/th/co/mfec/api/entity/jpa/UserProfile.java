@@ -1,35 +1,36 @@
 package th.co.mfec.api.entity.jpa;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "USER")
-public class User {
-    
+@Table(name = "USER_PROFILE")
+public class UserProfile {
+
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "user_name")
-    private String username;
-    @Column(name = "password")
-    private String password;
-    @Column(name = "is_enabled")
-    private String isEnabled;
-    @Column(name = "is_locked")
-    private String isLocked;
-    @Column(name = "expired_date")
-    private Date expiredDate;
+    @Column(name = "first_name_th")
+    private String firstNameTh;
+    @Column(name = "last_name_th")
+    private String lastNameTh;
+    @Column(name = "first_name_en")
+    private String firstNameEn;
+    @Column(name = "last_name_en")
+    private String lastNameEn;
+    @Column(name = "mobile_number")
+    private String mobileNumber;
+    @Column(name = "birth_date")
+    private Date birthDate;
     @Column(name = "delete_flag")
     private String deleteFlag;
     @Column(name = "created_by")
@@ -44,60 +45,51 @@ public class User {
     private Integer deletedBy;
     @Column(name = "deleted_at")
     private Date deletedAt;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @OneToOne(mappedBy = "user")
-    private UserProfile userProfile;
-
-    @OneToMany(mappedBy = "user")
-    private List<Address> addresses;
-
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-    }
-    public UserProfile getUserProfile() {
-        return userProfile;
-    }
-    public void setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
-    }
     public Integer getId() {
         return id;
     }
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getUsername() {
-        return username;
+    public String getFirstNameTh() {
+        return firstNameTh;
     }
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFirstNameTh(String firstNameTh) {
+        this.firstNameTh = firstNameTh;
     }
-    public String getPassword() {
-        return password;
+    public String getLastNameTh() {
+        return lastNameTh;
     }
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLastNameTh(String lastNameTh) {
+        this.lastNameTh = lastNameTh;
     }
-    public String getIsEnabled() {
-        return isEnabled;
+    public String getFirstNameEn() {
+        return firstNameEn;
     }
-    public void setIsEnabled(String isEnabled) {
-        this.isEnabled = isEnabled;
+    public void setFirstNameEn(String firstNameEn) {
+        this.firstNameEn = firstNameEn;
     }
-    public String getIsLocked() {
-        return isLocked;
+    public String getLastNameEn() {
+        return lastNameEn;
     }
-    public void setIsLocked(String isLocked) {
-        this.isLocked = isLocked;
+    public void setLastNameEn(String lastNameEn) {
+        this.lastNameEn = lastNameEn;
     }
-    public Date getExpiredDate() {
-        return expiredDate;
+    public String getMobileNumber() {
+        return mobileNumber;
     }
-    public void setExpiredDate(Date expiredDate) {
-        this.expiredDate = expiredDate;
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+    public Date getBirthDate() {
+        return birthDate;
+    }
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
     public String getDeleteFlag() {
         return deleteFlag;
@@ -141,5 +133,11 @@ public class User {
     public void setDeletedAt(Date deletedAt) {
         this.deletedAt = deletedAt;
     }
-
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
 }
