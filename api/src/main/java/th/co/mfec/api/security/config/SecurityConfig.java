@@ -30,7 +30,7 @@ public class SecurityConfig {
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            .authorizeRequests().antMatchers("/**/user/register", "/**/user/authen").anonymous()
+            .authorizeRequests().antMatchers("/**/user/register", "/**/user/authen", "/**/file/preview/*", "/**/file/download/*").anonymous()
             .anyRequest().authenticated()
             .and()
             .addFilterBefore(jwtFilterBean(), UsernamePasswordAuthenticationFilter.class);
